@@ -80,6 +80,7 @@ public final class MySQLChannel implements Channel {
     private static final CommandPacket _AUTOCOMMIT_OFF = new CommandPacket();
     private static final CommandPacket _COMMIT = new CommandPacket();
     private static final CommandPacket _ROLLBACK = new CommandPacket();
+
     static {
         _READ_UNCOMMITTED.packetId = 0;
         _READ_UNCOMMITTED.command = MySQLPacket.COM_QUERY;
@@ -326,6 +327,8 @@ public final class MySQLChannel implements Channel {
         // 设置通道参数
         this.threadId = hsp.threadId;
         int ci = hsp.serverCharsetIndex & 0xff;
+        LOGGER.error("ci有问题:==============" + ci + hsp.serverCharsetIndex);
+        //ci 这里等于192啊这么不符合科学的啊
         if ((charset = CharsetUtil.getCharset(ci)) != null) {
             this.charsetIndex = ci;
         } else {
@@ -340,18 +343,18 @@ public final class MySQLChannel implements Channel {
             throw new IllegalArgumentException(e.getMessage());
         }
         switch (bin.data[0]) {
-        case OkPacket.FIELD_COUNT:
-            afterSuccess();
-            break;
-        case ErrorPacket.FIELD_COUNT:
-            ErrorPacket err = new ErrorPacket();
-            err.read(bin);
-            throw new ErrorPacketException(new String(err.message, charset));
-        case EOFPacket.FIELD_COUNT:
-            auth323(bin.packetId, hsp.seed);
-            break;
-        default:
-            throw new UnknownPacketException(bin.toString());
+            case OkPacket.FIELD_COUNT:
+                afterSuccess();
+                break;
+            case ErrorPacket.FIELD_COUNT:
+                ErrorPacket err = new ErrorPacket();
+                err.read(bin);
+                throw new ErrorPacketException(new String(err.message, charset));
+            case EOFPacket.FIELD_COUNT:
+                auth323(bin.packetId, hsp.seed);
+                break;
+            default:
+                throw new UnknownPacketException(bin.toString());
         }
 
         return this;
@@ -397,15 +400,15 @@ public final class MySQLChannel implements Channel {
         out.flush();
         BinaryPacket bin = receive();
         switch (bin.data[0]) {
-        case OkPacket.FIELD_COUNT:
-            afterSuccess();
-            break;
-        case ErrorPacket.FIELD_COUNT:
-            ErrorPacket err = new ErrorPacket();
-            err.read(bin);
-            throw new ErrorPacketException(new String(err.message, charset));
-        default:
-            throw new UnknownPacketException(bin.toString());
+            case OkPacket.FIELD_COUNT:
+                afterSuccess();
+                break;
+            case ErrorPacket.FIELD_COUNT:
+                ErrorPacket err = new ErrorPacket();
+                err.read(bin);
+                throw new ErrorPacketException(new String(err.message, charset));
+            default:
+                throw new UnknownPacketException(bin.toString());
         }
     }
 
@@ -429,14 +432,14 @@ public final class MySQLChannel implements Channel {
         out.flush();
         BinaryPacket bin = receive();
         switch (bin.data[0]) {
-        case OkPacket.FIELD_COUNT:
-            break;
-        case ErrorPacket.FIELD_COUNT:
-            ErrorPacket err = new ErrorPacket();
-            err.read(bin);
-            throw new ErrorPacketException(new String(err.message, charset));
-        default:
-            throw new UnknownPacketException(bin.toString());
+            case OkPacket.FIELD_COUNT:
+                break;
+            case ErrorPacket.FIELD_COUNT:
+                ErrorPacket err = new ErrorPacket();
+                err.read(bin);
+                throw new ErrorPacketException(new String(err.message, charset));
+            default:
+                throw new UnknownPacketException(bin.toString());
         }
     }
 
@@ -449,16 +452,16 @@ public final class MySQLChannel implements Channel {
         out.flush();
         BinaryPacket bin = receive();
         switch (bin.data[0]) {
-        case OkPacket.FIELD_COUNT:
-            this.charsetIndex = ci;
-            this.charset = CharsetUtil.getCharset(ci);
-            break;
-        case ErrorPacket.FIELD_COUNT:
-            ErrorPacket err = new ErrorPacket();
-            err.read(bin);
-            throw new ErrorPacketException(new String(err.message, charset));
-        default:
-            throw new UnknownPacketException(bin.toString());
+            case OkPacket.FIELD_COUNT:
+                this.charsetIndex = ci;
+                this.charset = CharsetUtil.getCharset(ci);
+                break;
+            case ErrorPacket.FIELD_COUNT:
+                ErrorPacket err = new ErrorPacket();
+                err.read(bin);
+                throw new ErrorPacketException(new String(err.message, charset));
+            default:
+                throw new UnknownPacketException(bin.toString());
         }
     }
 
@@ -471,15 +474,15 @@ public final class MySQLChannel implements Channel {
         out.flush();
         BinaryPacket bin = receive();
         switch (bin.data[0]) {
-        case OkPacket.FIELD_COUNT:
-            this.txIsolation = txIsolation;
-            break;
-        case ErrorPacket.FIELD_COUNT:
-            ErrorPacket err = new ErrorPacket();
-            err.read(bin);
-            throw new ErrorPacketException(new String(err.message, charset));
-        default:
-            throw new UnknownPacketException(bin.toString());
+            case OkPacket.FIELD_COUNT:
+                this.txIsolation = txIsolation;
+                break;
+            case ErrorPacket.FIELD_COUNT:
+                ErrorPacket err = new ErrorPacket();
+                err.read(bin);
+                throw new ErrorPacketException(new String(err.message, charset));
+            default:
+                throw new UnknownPacketException(bin.toString());
         }
     }
 
@@ -492,15 +495,15 @@ public final class MySQLChannel implements Channel {
         out.flush();
         BinaryPacket bin = receive();
         switch (bin.data[0]) {
-        case OkPacket.FIELD_COUNT:
-            this.autocommit = autocommit;
-            break;
-        case ErrorPacket.FIELD_COUNT:
-            ErrorPacket err = new ErrorPacket();
-            err.read(bin);
-            throw new ErrorPacketException(new String(err.message, charset));
-        default:
-            throw new UnknownPacketException(bin.toString());
+            case OkPacket.FIELD_COUNT:
+                this.autocommit = autocommit;
+                break;
+            case ErrorPacket.FIELD_COUNT:
+                ErrorPacket err = new ErrorPacket();
+                err.read(bin);
+                throw new ErrorPacketException(new String(err.message, charset));
+            default:
+                throw new UnknownPacketException(bin.toString());
         }
     }
 
@@ -527,16 +530,16 @@ public final class MySQLChannel implements Channel {
 
     private CommandPacket getTxIsolationCommand(int txIsolation) {
         switch (txIsolation) {
-        case Isolations.READ_UNCOMMITTED:
-            return _READ_UNCOMMITTED;
-        case Isolations.READ_COMMITTED:
-            return _READ_COMMITTED;
-        case Isolations.REPEATED_READ:
-            return _REPEATED_READ;
-        case Isolations.SERIALIZABLE:
-            return _SERIALIZABLE;
-        default:
-            throw new UnknownTxIsolationException("txIsolation:" + txIsolation);
+            case Isolations.READ_UNCOMMITTED:
+                return _READ_UNCOMMITTED;
+            case Isolations.READ_COMMITTED:
+                return _READ_COMMITTED;
+            case Isolations.REPEATED_READ:
+                return _REPEATED_READ;
+            case Isolations.SERIALIZABLE:
+                return _SERIALIZABLE;
+            default:
+                throw new UnknownTxIsolationException("txIsolation:" + txIsolation);
         }
     }
 
@@ -562,16 +565,16 @@ public final class MySQLChannel implements Channel {
             BinaryPacket bin = new BinaryPacket();
             bin.read(killChannel.in);
             switch (bin.data[0]) {
-            case OkPacket.FIELD_COUNT:
-                killChannel.release();
-                break;
-            case ErrorPacket.FIELD_COUNT:
-                LOGGER.error("kill error! id:" + threadId + ", err=" + bin);
-                killChannel.release();
-                break;
-            default:
-                LOGGER.error("kill unknown response, id:" + threadId + "packet=" + bin);
-                killChannel.close();
+                case OkPacket.FIELD_COUNT:
+                    killChannel.release();
+                    break;
+                case ErrorPacket.FIELD_COUNT:
+                    LOGGER.error("kill error! id:" + threadId + ", err=" + bin);
+                    killChannel.release();
+                    break;
+                default:
+                    LOGGER.error("kill unknown response, id:" + threadId + "packet=" + bin);
+                    killChannel.close();
             }
         } catch (IOException e) {
             killChannel.close();
