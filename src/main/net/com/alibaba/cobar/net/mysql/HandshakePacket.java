@@ -16,6 +16,7 @@
 package com.alibaba.cobar.net.mysql;
 
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 
 import com.alibaba.cobar.mysql.BufferUtil;
 import com.alibaba.cobar.mysql.MySQLMessage;
@@ -54,6 +55,20 @@ public class HandshakePacket extends MySQLPacket {
     public byte serverCharsetIndex;
     public int serverStatus;
     public byte[] restOfScrambleBuff;
+
+    @Override
+    public String toString() {
+        return "HandshakePacket{" +
+                "protocolVersion=" + protocolVersion +
+                ", serverVersion=" + Arrays.toString(serverVersion) +
+                ", threadId=" + threadId +
+                ", seed=" + Arrays.toString(seed) +
+                ", serverCapabilities=" + serverCapabilities +
+                ", serverCharsetIndex=" + serverCharsetIndex +
+                ", serverStatus=" + serverStatus +
+                ", restOfScrambleBuff=" + Arrays.toString(restOfScrambleBuff) +
+                '}';
+    }
 
     public void read(BinaryPacket bin) {
         packetLength = bin.packetLength;
