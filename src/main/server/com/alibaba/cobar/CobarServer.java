@@ -96,8 +96,6 @@ public class CobarServer {
     public void startup() throws IOException {
         // server startup
         LOGGER.info("===============================================");
-        LOGGER.info("cobar开始执行");
-
         LOGGER.info(NAME + " is ready to startup ...");
         SystemConfig system = config.getSystem();
         timer.schedule(updateTime(), 0L, TIME_UPDATE_PERIOD);

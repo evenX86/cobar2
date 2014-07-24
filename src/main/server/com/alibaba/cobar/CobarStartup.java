@@ -28,7 +28,6 @@ public final class CobarStartup {
 
     public static void main(String[] args) {
         try {
-            LogLog.warn("开始执行cobar================");
             // init
             CobarServer server = CobarServer.getInstance();
             server.beforeStart(dateFormat);
