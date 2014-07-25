@@ -42,12 +42,12 @@
   <!-- 数据源定义，数据源是一个具体的后端数据连接的表示。 -->
   <dataSource name="dsTest" type="mysql">
     <property name="location">
-      <location>10.240.225.101:3307/dbtest1</location>
-      <location>10.240.225.101:3308/dbtest2</location>
-      <location>10.240.225.101:3309/dbtest3</location>
+      <location>10.20.153.177:3316/offer1</location>
+      <location>10.20.153.177:3316/offer1</location>
+      <location>10.20.153.177:3316/offer1</location>
     </property>
-    <property name="user">root</property>
-    <property name="password">snda123!@#</property>
+    <property name="user">offer</property>
+    <property name="password">offer</property>
     <property name="sqlMode">STRICT_TRANS_TABLES</property>
   </dataSource>
 
