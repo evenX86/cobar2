@@ -42,12 +42,13 @@ public class PartitionByStringTest extends TestCase {
                 "test   ",
                 (List<Expression>) ListUtil.createList(new PlaceHolder("member_id", "MEMBER_ID").setCacheEvalRst(false)));
         sut.setCacheEvalRst(false);
-        sut.setHashSlice("-2:");
-        sut.setPartitionCount("1024");
+        sut.setHashSlice(":");
+        sut.setPartitionCount("256");
         sut.setPartitionLength("1");
         sut.init();
-        Assert.assertEquals((int) execute(sut, "12"), (int) execute(sut, "012"));
-        Assert.assertEquals((int) execute(sut, "112"), (int) execute(sut, "012"));
+        Assert.assertEquals((int) execute(sut, "12"), (int) execute(sut, "12"));
+        System.out.println(execute(sut, "A"));
+        Assert.assertEquals((int) execute(sut, "12"), (int) execute(sut, "12"));
         Assert.assertEquals((int) execute(sut, "2"), (int) execute(sut, "2"));
 
         sut = new PartitionByString("test   ", (List<Expression>) ListUtil.createList(new PlaceHolder(
