@@ -58,6 +58,7 @@ import com.alibaba.cobar.parser.visitor.MySQLOutputASTVisitor;
 import com.alibaba.cobar.route.hint.CobarHint;
 import com.alibaba.cobar.route.visitor.PartitionKeyVisitor;
 import com.alibaba.cobar.util.CollectionUtil;
+import org.apache.log4j.helpers.LogLog;
 
 /**
  * @author xianmao.hexm
@@ -532,7 +533,7 @@ public final class ServerRouter {
         for (String rc : cols) {
             List<Object> list = columnValues.get(rc);
             if (list == null) {
-                String msg = "route err: rule column " + rc + " dosn't exist in extract: " + columnValues;
+                String msg = "route err: rule column " + rc + " doesn't exist in extract: " + columnValues;
                 throw new IllegalArgumentException(msg);
             }
             colsValIter.add(list.iterator());
