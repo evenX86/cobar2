@@ -109,6 +109,7 @@ public class CobarServer {
             processors[i] = new NIOProcessor("Processor" + i, handler, executor);
             processors[i].startup();
         }
+        //设置多长时间执行一次processCheck()
         timer.schedule(processorCheck(), 0L, system.getProcessorCheckPeriod());
 
         // startup connector
@@ -120,6 +121,7 @@ public class CobarServer {
         // init dataNodes
         Map<String, MySQLDataNode> dataNodes = config.getDataNodes();
         LOGGER.info("Initialize dataNodes ...");
+        //初始化数据节点。
         for (MySQLDataNode node : dataNodes.values()) {
             node.init(1, 0);
         }

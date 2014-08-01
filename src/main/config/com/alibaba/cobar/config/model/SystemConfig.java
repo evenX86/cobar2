@@ -60,6 +60,34 @@ public final class SystemConfig {
     private int clusterHeartbeatRetry;
     private int txIsolation;
     private int parserCommentVersion;
+
+    @Override
+    public String toString() {
+        return "SystemConfig{" +
+                "serverPort=" + serverPort +
+                ", managerPort=" + managerPort +
+                ", charset='" + charset + '\'' +
+                ", processors=" + processors +
+                ", processorHandler=" + processorHandler +
+                ", processorExecutor=" + processorExecutor +
+                ", initExecutor=" + initExecutor +
+                ", timerExecutor=" + timerExecutor +
+                ", managerExecutor=" + managerExecutor +
+                ", idleTimeout=" + idleTimeout +
+                ", processorCheckPeriod=" + processorCheckPeriod +
+                ", dataNodeIdleCheckPeriod=" + dataNodeIdleCheckPeriod +
+                ", dataNodeHeartbeatPeriod=" + dataNodeHeartbeatPeriod +
+                ", clusterHeartbeatUser='" + clusterHeartbeatUser + '\'' +
+                ", clusterHeartbeatPass='" + clusterHeartbeatPass + '\'' +
+                ", clusterHeartbeatPeriod=" + clusterHeartbeatPeriod +
+                ", clusterHeartbeatTimeout=" + clusterHeartbeatTimeout +
+                ", clusterHeartbeatRetry=" + clusterHeartbeatRetry +
+                ", txIsolation=" + txIsolation +
+                ", parserCommentVersion=" + parserCommentVersion +
+                ", sqlRecordCount=" + sqlRecordCount +
+                '}';
+    }
+
     private int sqlRecordCount;
 
     public SystemConfig() {

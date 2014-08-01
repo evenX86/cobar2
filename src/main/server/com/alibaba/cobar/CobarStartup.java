@@ -28,7 +28,7 @@ public final class CobarStartup {
 
     public static void main(String[] args) {
         try {
-            // init
+            // init,单例模式,保证了系统中永远都只有一个该类的实例。
             CobarServer server = CobarServer.getInstance();
             server.beforeStart(dateFormat);
 

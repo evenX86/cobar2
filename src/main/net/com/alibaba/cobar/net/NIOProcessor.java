@@ -153,13 +153,11 @@ public final class NIOProcessor {
         Iterator<Entry<Long, FrontendConnection>> it = frontends.entrySet().iterator();
         while (it.hasNext()) {
             FrontendConnection c = it.next().getValue();
-
             // 删除空连接
             if (c == null) {
                 it.remove();
                 continue;
             }
-
             // 清理已关闭连接，否则空闲检查。
             if (c.isClosed()) {
                 it.remove();
@@ -175,13 +173,11 @@ public final class NIOProcessor {
         Iterator<Entry<Long, BackendConnection>> it = backends.entrySet().iterator();
         while (it.hasNext()) {
             BackendConnection c = it.next().getValue();
-
             // 删除空连接
             if (c == null) {
                 it.remove();
                 continue;
             }
-
             // 清理已关闭连接，否则空闲检查。
             if (c.isClosed()) {
                 it.remove();

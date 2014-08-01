@@ -139,7 +139,7 @@ public class AuthPacket extends MySQLPacket {
 
     @Override
     public int calcPacketSize() {
-        int size = 32;// 4+4+1+23;
+        int size = 32;// 4+4+1+23; clientauthentication packet -> clientflags + max_packet_size + charset_number
         size += (user == null) ? 1 : user.length() + 1;
         size += (password == null) ? 1 : BufferUtil.getLength(password);
         size += (database == null) ? 1 : database.length() + 1;

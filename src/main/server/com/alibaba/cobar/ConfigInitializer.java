@@ -43,7 +43,7 @@ import com.alibaba.cobar.util.SplitUtil;
  * @author <a href="mailto:shuo.qius@alibaba-inc.com">QIU Shuo</a>
  */
 public class ConfigInitializer {
-    private volatile SystemConfig system;
+    private volatile SystemConfig system;   //设置数据结构,保证变量是同步的
     private volatile CobarCluster cluster;
     private volatile QuarantineConfig quarantine;
     private volatile Map<String, UserConfig> users;
@@ -71,6 +71,10 @@ public class ConfigInitializer {
         this.checkConfig();
     }
 
+    /**
+     * 检查配置是否正常，如不是则抛出异常。
+     * @throws ConfigException
+     */
     private void checkConfig() throws ConfigException {
         if (users == null || users.isEmpty())
             return;
@@ -133,6 +137,11 @@ public class ConfigInitializer {
         return new CobarCluster(configLoader.getClusterConfig());
     }
 
+    /**
+     * 初始化数据节点
+     * @param configLoader
+     * @return
+     */
     private Map<String, MySQLDataNode> initDataNodes(ConfigLoader configLoader) {
         Map<String, DataNodeConfig> nodeConfs = configLoader.getDataNodes();
         Map<String, MySQLDataNode> nodes = new HashMap<String, MySQLDataNode>(nodeConfs.size());
