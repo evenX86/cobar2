@@ -30,8 +30,8 @@ public final class CobarStartup {
         try {
             // init,单例模式,保证了系统中永远都只有一个该类的实例。
             CobarServer server = CobarServer.getInstance();
+            // 服务启动前的初始化工作
             server.beforeStart(dateFormat);
-
             // startup
             server.startup();
         } catch (Throwable e) {
@@ -40,5 +40,4 @@ public final class CobarStartup {
             System.exit(-1);
         }
     }
-
 }

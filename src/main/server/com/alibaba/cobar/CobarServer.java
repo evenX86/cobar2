@@ -66,6 +66,7 @@ public class CobarServer {
     private NIOAcceptor manager;
     private NIOAcceptor server;
 
+    //私有构造器不能被实例化，采用单例模式
     private CobarServer() {
         this.config = new CobarConfig();
         SystemConfig system = config.getSystem();
