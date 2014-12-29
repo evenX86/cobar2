@@ -38,7 +38,7 @@ public final class NIOAcceptor extends Thread {
     private final int port;
     private final Selector selector;
     private final ServerSocketChannel serverChannel;//类似BIO的ServerSocket，是一个可以监听新进来的TCP连接的通道
-    private final FrontendConnectionFactory factory;
+    private final FrontendConnectionFactory factory;//前后端连接工厂类
     private NIOProcessor[] processors;
     private int nextProcessor;
     private long acceptCount;
